@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        html, body, #map {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="map"></div>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+    <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIwzALxUPNbatRBj3Xi1Uhp0fFzwWNBkE&callback=initMap&libraries=&v=weekly"
+        async>
+    </script>
+    <script>
+        function initMap() {
+            const directionsService = new google.maps.DirectionsService();
+            const directionsRenderer = new google.maps.DirectionsRenderer();
+            const UTC2 = { lat: 10.8458136, lng: 106.7939966 };
+            const Home = { lat: 11.535571, lng: 106.8868057 }; //11.535571,106.8868057
+            const iconHome = {
+                url: "home.png",
+                scaledSize: new google.maps.Size(25, 25),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(0, 0)
+            };
+            const iconUTC2 = {
+                url: "Logo.jpg",
+                scaledSize: new google.maps.Size(25, 25),
+                origin: new google.maps.Point(0,0),
+                anchor: new google.maps.Point(0, 0)
+            };
+            
+            
+            const infoUTC2 = "Trường Đại Học Giao Thông Vận Tải PH tại TP. Hồ Chí Minh";
+            const infoHome = "<div>Trần Quang Duy<br /> 21 Tuổi<br />5951071020<br />05-02-2000<br />Bình Phước<br />duy05022000@gmail.com</div>";
+
+
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 12,
+                center: Home
+            });
+            directionsRenderer.setMap(map);
+ 
+
+            const markerHome = new google.maps.Marker({
+                position: Home,
+                map: map,
+                title: "Home",
+                draggable: true,
+                icon: iconHome,
+                animation: google.maps.Animation.DROP,
+            });
+
+            const markerUTC2 = new google.maps.Marker({
+                position: UTC2,
+                map: map,
+                title: "UTC2",
+                draggable: true,
+                icon: iconUTC2,
+                animation: google.maps.Animation.DROP,
+            });
+
+            const infoUTC2Load = new google.maps.InfoWindow({
+                content: infoUTC2
+            });
+            markerUTC2.addListener("click", () => infoUTC2Load.open(map, markerUTC2));
+
+            const infoHomeLoad = new google.maps.InfoWindow({
+                content: infoHome
+            });
+            markerHome.addListener("click", () => infoHomeLoad.open(map, markerHome));
+            
+
+            function calculateAndDisplayRoute(directionsService, directionsRenderer) {
+            directionsService.route(
+                {
+                    origin: UTC2,
+                    destination: Home,
+                    travelMode: google.maps.TravelMode.DRIVING,
+                },
+                (response, status) => {
+                    if (status === "OK") {
+                        directionsRenderer.setDirections(response);
+                    } else {window.alert("Directions request failed due to " + status);}});
+        }
+        calculateAndDisplayRoute(directionsService, directionsRenderer);
+        }
+
+
+
+    </script>
+</body>
+</html>
