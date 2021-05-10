@@ -31,7 +31,7 @@ namespace Buoi3_FacebookAPI
             string contentString = "<h2>3 Bài đăng gần nhất</h2></br>";
             for (int i = 0; i < 3; i++)
             {
-                contentString += "<b></br>Bài thứ </b>" + (i + 1) + " có số like là:  "+ data.data[0].likes.summary.total_count;
+                contentString += "<b></br>Bài thứ </b>" + (i + 1) + " có số like là:  "+ data.data[i].likes.summary.total_count;
                 contentString += "<br>---------------------------------------------------------";
             }
             Label1.Text = contentString;
