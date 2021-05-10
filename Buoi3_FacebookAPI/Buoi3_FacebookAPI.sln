@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31112.23
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Buoi3_FacebookAPI", "Buoi3_FacebookAPI\Buoi3_FacebookAPI.csproj", "{F3C71B3C-E920-4224-8D7D-852243902190}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F3C71B3C-E920-4224-8D7D-852243902190}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3C71B3C-E920-4224-8D7D-852243902190}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3C71B3C-E920-4224-8D7D-852243902190}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3C71B3C-E920-4224-8D7D-852243902190}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1BF8DEBE-1708-4CB2-8492-B3F62E78E1A6}
+	EndGlobalSection
+EndGlobal
