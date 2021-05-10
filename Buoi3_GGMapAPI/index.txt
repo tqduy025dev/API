@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAP B3</title>
+    <style>
+        #map {
+            height: 100%;   
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA66KwUrjxcFG5u0exynlJ45CrbrNe3hEc&callback=initMap&libraries=&v=weekly"
+        async></script>
+    <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+    <!-- Xu ly su kien -->
+    <script type="text/javascript">
+        function initMap() {
+            const directionsService = new google.maps.DirectionsService();
+            const directionsRenderer = new google.maps.DirectionsRenderer();
+
+
+            const BuuDien = { lat: 10.780043081248142, lng: 106.69994515839129 };
+            const VanMieu = { lat: 21.02761757367215, lng: 105.83548241321816 };
+            
+
+            const infoBuuDien = "<div>Bưu Điện Trung Tâm Thành Phố<br /> 2 Công xã Paris, Bến Nghé, Quận 1, Thành phố Hồ Chí Minh, Việt Nam<br />+842838221677<br />QMHX+WX Quận 1, Thành phố Hồ Chí Minh, Việt Nam<br />http://hcmpost.vn/</div>";
+            const infoVanMieu = "<div>Văn Miếu Quốc Tử Giám<br /> 58 Quốc Tử Giám, Văn Miếu, Đống Đa, Hà Nội 100000, Việt Nam<br />+842437472566<br />2RGP+X5 Đống Đa, Hà Nội, Việt Nam<br />Địa điểm lịch sử</div>";
+            
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 10,
+                center: BuuDien,
+            });
+            
+            const markerBuuDien = new google.maps.Marker({
+                position: BuuDien,
+                map: map,
+                
+            });
+            const markerVanMieu = new google.maps.Marker({
+                position: VanMieu,
+                map: map,
+                
+            });
+            
+            markerBuuDien.addListener("click", () => {
+                var infowindow = new google.maps.InfoWindow({
+                    content: infoBDTTP,
+                });
+
+                infowindow.open(map, markerBuuDien);
+            });
+            markerVanMieu.addListener("click", () => {
+                var infowindow = new google.maps.InfoWindow({
+                    content: infoVMQTD,
+                });
+
+                infowindow.open(map, markerVanMieu);
+            });
+
+            const tg1BuuDien = [
+                { lat: 10.78552991712617, lng: 106.87466359520877 },
+                { lat: 11.027118038378331, lng: 106.59176464287475 },
+                { lat: 10.482950222143012, lng: 106.56724833292282 },
+            ];
+            const tg2BuuDien = [
+                { lat: 10.895191656711592, lng: 106.67870097914356 },
+                { lat: 10.718661292530722, lng: 106.80097155275692 },
+                { lat: 10.725277552029164, lng: 106.59560338431415 },
+            ];
+
+            const tg1VanMieu = [
+                { lat: 21.045846030587217, lng: 105.5853672646467 },
+                { lat: 20.821052349925445, lng: 105.93332578823338 },
+                { lat: 21.227692162603706, lng: 105.99504052122592 },
+            ];
+            const tg2VanMieu = [
+                { lat: 20.94720090029461 , lng: 105.92502455554609 },
+                { lat: 21.132463783707035, lng: 105.88949508438354 },
+                { lat: 21.007721300407308, lng: 105.71237975554664 },
+            ];
+
+            Creat_bankinh(BuuDien);
+            Creat_tamgiac1(tg1BuuDien);
+            Creat_tamgiac2(tg2BuuDien);
+
+            Creat_bankinh(VanMieu);
+            Creat_tamgiac1(tg1VanMieu);
+            Creat_tamgiac2(tg2VanMieu);
+
+            directionsRenderer.setMap(map);
+            calculateAndDisplayRoute(directionsService, directionsRenderer);
+
+            function Creat_bankinh(LatLng){
+                var bankinh = new google.maps.Circle({
+                    map: map,
+                    center: LatLng,
+                    radius: 13000,
+                    strokeColor: "#FF0000",
+                });
+            }
+
+
+            function Creat_tamgiac1(LatLng) {
+                const tg1 = new google.maps.Polygon({
+                    paths: LatLng,
+                    strokeColor: "#6a3aba",
+                    strokeOpacity: 1,
+                    strokeWeight: 2,
+                    editable: true,
+                    draggable: true
+                });
+                tg1.setMap(map);
+            }
+            function Creat_tamgiac2(LatLng) {
+                const tg2 = new google.maps.Polygon({
+                    paths: LatLng,
+                    strokeColor: "#ffffff",
+                    strokeOpacity: 1,
+                    strokeWeight: 2,
+                    editable: true,
+                    draggable: true
+                });
+                tg2.setMap(map);
+            }
+
+            function calculateAndDisplayRoute(directionsService, directionsRenderer) {
+                directionsService.route(
+                    {   
+                        origin: BuuDien,
+                        destination: VanMieu,
+                        travelMode: google.maps.TravelMode.DRIVING,
+                    },
+                    (response, status) => {
+                        if (status === "OK") {
+                            directionsRenderer.setDirections(response);
+                        } else {
+                            window.alert("Directions request failed due to " + status);
+                    }
+                });
+            }
+
+        }
+
+    </script>
+</body>
+</html>
